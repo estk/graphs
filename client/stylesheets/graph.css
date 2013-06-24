@@ -1,0 +1,14 @@
+#graph_container {
+  position: relative;
+}
+#graph {
+        position: relative;
+        left: 20px;
+        right: 20px;
+}
+#y_axis {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 20px;
+}
