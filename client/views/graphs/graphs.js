@@ -31,6 +31,7 @@ var makeGraph = function () {
       graph: graph,
       orientation: 'left',
       ticks: 3,
+      tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
       element: document.getElementById('y_axis')
   });
 
