@@ -9,10 +9,11 @@ if (Classes.find().count() === 0) {
       status       : 'open',
       _teacherName : 'Tom Halbert',
 
-      stats: {
-        students: 10,
-        helpfuls: 20,
-        comments: 30
+      statsDigest: {
+        time: ["20130101", "20130201", "20130301", "20130401", "20130501", "20130601", "20130701"],
+        students: [21, 22, 23, 24, 25, 26, 27],
+        helpfuls: [5, 10, 15, 20, 25, 30, 35],
+        comments: [2, 4, 8, 16, 32, 64, 128]
       }
     }
   })
