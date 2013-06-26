@@ -1319,12 +1319,6 @@ Rickshaw.Graph.Axis.X = function(args) {
 		} else {
 			this.grid = args.grid;
 		}
-		
-		if (typeof(args.tickSize) === 'undefined') {
-			this.tickSize = true;
-		} else {
-			this.tickSize = args.tickSize;
-		}
 
 		if (args.element) {
 
@@ -1433,6 +1427,7 @@ Rickshaw.Graph.Axis.Y = Rickshaw.Class.create( {
 
 		var pixelsPerTick = args.pixelsPerTick || 75;
 		this.ticks = args.ticks || Math.floor(this.graph.height / pixelsPerTick);
+		this.tickSize = args.tickSize || 4;
 		this.ticksTreatment = args.ticksTreatment || 'plain';
 		this.tickFormat = args.tickFormat || function(y) { return y };
 
@@ -1442,12 +1437,6 @@ Rickshaw.Graph.Axis.Y = Rickshaw.Class.create( {
 			this.grid = true;
 		} else {
 			this.grid = args.grid;
-		}
-		
-		if (typeof(args.tickSize) === 'undefined') {
-			this.tickSize = 4;
-		} else {
-			this.tickSize = args.tickSize;
 		}
 
 		if (args.element) {
@@ -2091,9 +2080,9 @@ Rickshaw.Graph.Legend = function(args) {
 			line.className += ' disabled';
 		}
 
-		var swatch = document.createElement('div');
-		swatch.className = 'swatch';
-		swatch.style.backgroundColor = series.color;
+		var swatch = document.createElement('i');
+		swatch.className = 'icon-circle-blank';
+		swatch.style.color = series.color;
 
 		line.appendChild(swatch);
 

@@ -22,7 +22,7 @@ var makeGraph = function () {
   	renderer: 'area',
   	stroke: true,
   	series: [ {
-      name: "Avg Helpfuls per student",
+      name: "Avg. Helpfuls per student",
       data: data.hps,
   		color: 'rgba(192,210,225,0.7)',
   		stroke: 'rgba(0,0,0,0.15)'
