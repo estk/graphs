@@ -1,32 +1,42 @@
-body { background: white; }
-#graph_area {
-  display: inline-block;
-  background-color: rgba(241,241,241,1); 
+body { background: white; font-family: Sans-Serif; }
+#percent-flips {
+  background-color:white;
 }
-#graph_container {
-  position: relative;
-  padding: 20px;
-  background: white;
+#class-overview {
+  border-radius: 2px;
+  border-style:solid;
+  border-width:1px;
+  border-color: rgba(220,220,220,1);
+  background-color: rgba(245,245,245,1); 
+  tr {
+    border-width: 2px;
+    border-top-style: solid;
+  }
+}
+#graph-container {
+  display:block;
+  background-color: #fff;
   border-top-style: solid;
-  border-width: 1px;
-  margin: 0 3px 0 3px;
+  border-color: rgba(220,220,220,1);
+  border-width: 2px;
 }
 #graph {
-        overflow: auto;
-        position: relative;
-        left: 20px;
+        left: 20px
         right: 20px;
+        display: inline-block;
         svg { 
           background-color: rgba(241,241,241,1); 
         }
 }
 #y_axis {
-        position: absolute;
+        position: relative;
+        display: inline-block;
+        left: 10px;
         top: 0;
         bottom: 0;
         width: 20px;
         path, line {
-          stroke: white;
+          stroke: rgba(0,0,0,0);
         }
 }
 #x_axis {
@@ -36,10 +46,13 @@ body { background: white; }
         height: 30px;
         left: 20px;
         path, line {
-          stroke: white;
+          stroke: rgba(0,0,0,0);
         }
 }
 #legend {
+  border-top-style: solid;
+  border-width: 2px;
+  border-color: rgba(220,220,220,1);
   color: #000;
   background: rgba(0,0,0,0);
   font-family: Sans-Serif;

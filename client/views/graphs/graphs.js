@@ -54,8 +54,6 @@ var makeGraph = function () {
       graph: graph,
       orientation: 'bottom',
       grid: false,
-      // tickmarks: false,
-      tickSize: 0,
       element: document.getElementById('x_axis'),
       tickFormat: format,
   });
@@ -66,8 +64,6 @@ var makeGraph = function () {
       graph: graph,
       orientation: 'left',
       grid: false,
-      // tickmarks: false,
-      tickSize: 0,
       ticks: 3,
       tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
       element: document.getElementById('y_axis')
