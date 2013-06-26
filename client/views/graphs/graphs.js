@@ -24,13 +24,11 @@ var makeGraph = function () {
   	series: [ {
       name: "Avg Helpfuls per student",
       data: data.hps,
-      // data: [ { x: 0, y: 40 }, { x: 1, y: 49 }, { x: 2, y: 38 }, { x: 3, y: 20 }, { x: 4, y: 16 } ],
   		color: 'rgba(192,210,225,0.7)',
   		stroke: 'rgba(0,0,0,0.15)'
   	}, {
       name: "Avg. Comments per response",
       data: data.cpr,
-      // data: [ { x: 0, y: 22 }, { x: 1, y: 25 }, { x: 2, y: 38 }, { x: 3, y: 44 }, { x: 4, y: 46 } ],
   		color: 'rgba(230,240,226,0.7)',
   		stroke: 'rgba(0,0,0,0.15)'
   	} ]
@@ -39,15 +37,37 @@ var makeGraph = function () {
   graph.renderer.unstack = true;
   graph.render();
   
-  var x_axis = new Rickshaw.Graph.Axis.Time({
-      graph: graph
+  var format = function(n) {
+  	var map = {
+  		1: 'January',
+  		2: 'Febuary',
+  		3: 'March',
+  		4: 'April',
+  		5: 'May',
+  		6: 'June',
+  		7: 'July'
+  	};
+  	return map[n];
+  }
+  
+  var x_ticks = new Rickshaw.Graph.Axis.X({
+      graph: graph,
+      orientation: 'bottom',
+      grid: false,
+      // tickmarks: false,
+      tickSize: 0,
+      element: document.getElementById('x_axis'),
+      tickFormat: format,
   });
 
-  x_axis.render();
+  x_ticks.render();
   
   var y_axis = new Rickshaw.Graph.Axis.Y({
       graph: graph,
       orientation: 'left',
+      grid: false,
+      // tickmarks: false,
+      tickSize: 0,
       ticks: 3,
       tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
       element: document.getElementById('y_axis')
