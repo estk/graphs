@@ -25,12 +25,12 @@ var makeGraph = function () {
       name: "Avg. Helpfuls per student",
       data: data.hps,
   		color: 'rgba(192,210,225,0.7)',
-  		stroke: 'rgba(0,0,0,0.15)'
+  		stroke: 'rgba(192,210,225,0.95)'
   	}, {
       name: "Avg. Comments per response",
       data: data.cpr,
   		color: 'rgba(230,240,226,0.7)',
-  		stroke: 'rgba(0,0,0,0.15)'
+  		stroke: 'rgba(230,240,226,0.95)'
   	} ]
   } );
 
