@@ -1309,16 +1309,8 @@ Rickshaw.Graph.Axis.X = function(args) {
 		this.graph = args.graph;
 		this.orientation = args.orientation || 'top';
 
-		var pixelsPerTick = args.pixelsPerTick || 75;
-		this.ticks = args.ticks || Math.floor(this.graph.width / pixelsPerTick);
 		this.tickSize = args.tickSize || 4;
 		this.ticksTreatment = args.ticksTreatment || 'plain';
-		
-		if (typeof(args.grid) === 'undefined') {
-			this.grid = true;
-		} else {
-			this.grid = args.grid;
-		}
 
 		if (args.element) {
 
@@ -1364,6 +1356,9 @@ Rickshaw.Graph.Axis.X = function(args) {
 
 		var axis = d3.svg.axis().scale(this.graph.x).orient(this.orientation);
 		axis.tickFormat( args.tickFormat || function(x) { return x } );
+    
+		var pixelsPerTick = args.pixelsPerTick || 75;
+		this.ticks = args.ticks || Math.floor(this.graph.width / pixelsPerTick);
 
 		var berth = Math.floor(this.width * berthRate / 2) || 0;
 		var transform;
@@ -1387,12 +1382,10 @@ Rickshaw.Graph.Axis.X = function(args) {
 
 		var gridSize = (this.orientation == 'bottom' ? 1 : -1) * this.graph.height;
 
-		if (this.grid) {
 		this.graph.vis
 			.append("svg:g")
 			.attr("class", "x_grid_d3")
 			.call(axis.ticks(this.ticks).tickSubdivide(0).tickSize(gridSize));
-		}
 
 		this._renderHeight = this.graph.height;
 	};
@@ -1432,12 +1425,6 @@ Rickshaw.Graph.Axis.Y = Rickshaw.Class.create( {
 		this.tickFormat = args.tickFormat || function(y) { return y };
 
 		this.berthRate = 0.10;
-		
-		if (typeof(args.grid) === 'undefined') {
-			this.grid = true;
-		} else {
-			this.grid = args.grid;
-		}
 
 		if (args.element) {
 
@@ -1495,7 +1482,7 @@ Rickshaw.Graph.Axis.Y = Rickshaw.Class.create( {
 
 		var axis = this._drawAxis(this.graph.y);
 
-		if (this.grid) {this._drawGrid(axis);}
+		this._drawGrid(axis);
 
 		this._renderHeight = this.graph.height;
 	},

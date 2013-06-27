@@ -55,7 +55,7 @@ var makeGraph = function () {
       graph: graph,
       orientation: 'bottom',
       grid: false,
-      ticks: 4,
+      // ticks: 4,
       tickFormat: format,
       element: document.getElementById('x_axis'),
   });
@@ -84,6 +84,14 @@ Meteor.startup(makeGraph);
 var reRenderGraph = function() {
   graph.configure({width: ($("#graph_container").width() - 45)});
   graph.render();
+  // d3.selectAll("#x_axis>svg>g").remove();
+  // x_axis = new Rickshaw.Graph.Axis.X({
+  //     graph: graph,
+  //     orientation: 'bottom',
+  //     grid: false,
+  //     element: document.getElementById('x_axis'),
+  // });
+  // x_axis.render();
 };
 
 $(window).on('resize', reRenderGraph);
