@@ -51,12 +51,13 @@ var makeGraph = function () {
   	return map[n];
   }
   
-  x_axis = new Rickshaw.Graph.Axis.X({
+  var x_axis = new Rickshaw.Graph.Axis.X({
       graph: graph,
       orientation: 'bottom',
       grid: false,
-      element: document.getElementById('x_axis'),
+      ticks: 4,
       tickFormat: format,
+      element: document.getElementById('x_axis'),
   });
 
   x_axis.render();
