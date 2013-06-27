@@ -15,12 +15,13 @@ var prepareData = function(stats) {
 
 var makeGraph = function () {
   var data = prepareData(Classes.findOne().statsDigest);
-  var graph = new Rickshaw.Graph( {
+  graph = new Rickshaw.Graph( {
   	element: document.querySelector("#graph"),
-  	width: 260,
+  	width: ($("#graph_container").width() - 45),
   	height: 110,
   	renderer: 'area',
   	stroke: true,
+    padding: { top: 0.01, right: 0.20, bottom: 0.01, left: 0 },
   	series: [ {
       name: "Avg. Helpfuls per student",
       data: data.hps,
@@ -50,7 +51,7 @@ var makeGraph = function () {
   	return map[n];
   }
   
-  var x_ticks = new Rickshaw.Graph.Axis.X({
+  x_axis = new Rickshaw.Graph.Axis.X({
       graph: graph,
       orientation: 'bottom',
       grid: false,
@@ -58,7 +59,7 @@ var makeGraph = function () {
       tickFormat: format,
   });
 
-  x_ticks.render();
+  x_axis.render();
   
   var y_axis = new Rickshaw.Graph.Axis.Y({
       graph: graph,
@@ -74,8 +75,15 @@ var makeGraph = function () {
   var legend = new Rickshaw.Graph.Legend( {
   	graph: graph,
   	element: document.getElementById('legend')
-
   } );
 };
 
 Meteor.startup(makeGraph);
+
+var reRenderGraph = function() {
+  graph.configure({width: ($("#graph_container").width() - 45)});
+  graph.render();
+};
+
+$(window).on('resize', reRenderGraph);
+
