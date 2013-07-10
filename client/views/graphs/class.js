@@ -1,33 +1,15 @@
-
+hps = [];
+cpr = [];
 MyGraph = {
-  inst: null,
-  init: _.once(function () {
-    // [numerator, denominator, time]
-    var prepStats = function(ary) {
-      var n = ary[0];
-      var d = ary[1];
-      return {y: n/d, x: ary[2]};
-    };
-
-    // returns a time series of Helpfuls per Student
-    var prepHps = function(stats) {
-      return _.map(_.zip(stats.helpfuls, stats.students, stats.times), prepStats);
-    };
-
-    // returns a time series of Comments per Response
-    var prepCpr = function(stats) {
-      return _.map(_.zip(stats.comments, stats.responses, stats.times), prepStats);
-    };
-
-    // var hps = [{x: 0, y: 0}];
-    // var cpr = [{x: 0, y: 0}];
-    if (Classes.findOne() !== undefined) {
+  graph: null,
+  init: function () {
+    if (this.graph === null && Classes.findOne() !== undefined) {
       var stats = Classes.findOne().statsDigest;
-      var hps = prepHps(stats);
-      var cpr = prepCpr(stats);
+      hps = prepHps(stats);
+      cpr = prepCpr(stats);
       debugger;
-      this.inst = new Rickshaw.Graph({
-        element: $("#graph"),
+      var graph = new Rickshaw.Graph({
+        element: document.querySelector("#graph"),
         width: ($("#graph_container").width() - 45), // responsive resize
         height: 110,
         renderer: 'area',
@@ -45,10 +27,8 @@ MyGraph = {
           stroke: 'rgba(230,240,226,0.95)'
         } ]
       });
-      debugger;
-      this.inst.renderer.unstack = true;
-      this.inst.render();
-      debugger;
+      graph.renderer.unstack = true;
+      graph.render();
 
       // When we use this for flipped we will let the function be a call to momment(n).format(..)
       var format = function(n) {
@@ -65,7 +45,7 @@ MyGraph = {
       };
 
       var x_axis = new Rickshaw.Graph.Axis.X({
-          graph: this.inst,
+          graph: graph,
           orientation: 'bottom',
           grid: false,
           tickFormat: format,
@@ -74,7 +54,7 @@ MyGraph = {
       x_axis.render();
 
       var y_axis = new Rickshaw.Graph.Axis.Y({
-          graph: this.inst,
+          graph: graph,
           orientation: 'left',
           grid: false,
           ticks: 3,
@@ -84,43 +64,75 @@ MyGraph = {
       y_axis.render();
 
       var legend = new Rickshaw.Graph.Legend( {
-        graph: this.inst,
+        graph: graph,
         element: document.getElementById('legend')
       });
+      this.graph = graph;
     }
-  } )
+  }
 };
 
+// [numerator, denominator, time]
+var prepStats = function(ary) {
+  var n = ary[0];
+  var d = ary[1];
+  return {y: n/d, x: ary[2]};
+};
+
+// returns a time series of Helpfuls per Student
+var prepHps = function(stats) {
+  return _.map(_.zip(stats.helpfuls, stats.students, stats.times), prepStats);
+};
+
+// returns a time series of Comments per Response
+var prepCpr = function(stats) {
+  return _.map(_.zip(stats.comments, stats.responses, stats.times), prepStats);
+};
+
+
 var reRenderGraph = function() {
-  MyGraph.inst.configure({width: ($("#graph_container").width() - 45)});
-  MyGraph.inst.render();
+  MyGraph.graph.configure({width: ($("#graph_container").width() - 45)});
+  MyGraph.graph.render();
 };
 
 // Event Listeners
-Template.graphClass.created = function() {
-  // MyGraph.init();
-  // MyGraph.inst.update();
+Template.graphClass.rendered = function() {
+  debugger;
+  // MyGraph.init() && MyGraph.graph.render();
 };
 
-// $(window).on('resize', reRenderGraph);
-// setInterval( function() {
-//   if (Classes.findOne() !== undefined) {
-//     var stats = Classes.findOne().statsDigest;
-//     hps = prepHps(stats);
-//     cpr = prepCpr(stats);
-//   };
-//   graph.configure( {
-//   series: [ {
-//     name: "Avg. Helpfuls per student",
-//     data: hps,
-//     color: 'rgba(192,210,225,0.7)',
-//     stroke: 'rgba(192,210,225,0.95)'
-//   }, {
-//     name: "Avg. Comments per response",
-//     data: cpr,
-//     color: 'rgba(230,240,226,0.7)',
-//     stroke: 'rgba(230,240,226,0.95)'
-//   } ] } );
-//   graph.render();
-// }, 300 );
+// Classes.find().observe({
+//   changed: function(clas) {
+//     debugger;
+    // var stats = clas.statsDigest;
+    // var hps = prepHps(stats);
+    // var cpr = prepCpr(stats);
+    // graph.configure( {
+    // series: [ {
+    //   name: "Avg. Helpfuls per student",
+    //   data: hps,
+    //   color: 'rgba(192,210,225,0.7)',
+    //   stroke: 'rgba(192,210,225,0.95)'
+    // }, {
+    //   name: "Avg. Comments per response",
+    //   data: cpr,
+    //   color: 'rgba(230,240,226,0.7)',
+    //   stroke: 'rgba(230,240,226,0.95)'
+    // } ] } );
+    // graph.render();
+//   }
+// });
+
+counter = 7;
+var addData = function(hps, cpr) {
+  hps.push({x:counter, y:20});
+  cpr.push({x:counter, y:20});
+  counter++;
+}
+
+setInterval( function() {
+	addData(hps, cpr);
+  MyGraph.init();
+	MyGraph.graph.update();
+}, 3000 );
 
