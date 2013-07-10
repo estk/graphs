@@ -5,9 +5,10 @@ MyGraph = {
   init: function () {
     if (this.graph === null && Classes.findOne() !== undefined) {
       var stats = Classes.findOne().statsDigest;
-      hps = prepHps(stats);
-      cpr = prepCpr(stats);
-      debugger;
+      // hps = prepHps(stats);
+      hps = [{x: new Date().getTime(), y: 1}]
+      // cpr = prepCpr(stats);
+      cpr = [{x: new Date().getTime(), y: 2}]
       var graph = new Rickshaw.Graph({
         element: document.querySelector("#graph"),
         width: ($("#graph_container").width() - 45), // responsive resize
@@ -32,16 +33,7 @@ MyGraph = {
 
       // When we use this for flipped we will let the function be a call to momment(n).format(..)
       var format = function(n) {
-        var map = {
-          1: 'January',
-          2: 'Febuary',
-          3: 'March',
-          4: 'April',
-          5: 'May',
-          6: 'June',
-          7: 'July'
-        };
-        return map[n];
+        return moment(n).format("DD.MM.YY")
       };
 
       var x_axis = new Rickshaw.Graph.Axis.X({
@@ -97,37 +89,21 @@ var reRenderGraph = function() {
 
 // Event Listeners
 Template.graphClass.rendered = function() {
-  debugger;
   // MyGraph.init() && MyGraph.graph.render();
 };
 
 // Classes.find().observe({
 //   changed: function(clas) {
-//     debugger;
-    // var stats = clas.statsDigest;
-    // var hps = prepHps(stats);
-    // var cpr = prepCpr(stats);
-    // graph.configure( {
-    // series: [ {
-    //   name: "Avg. Helpfuls per student",
-    //   data: hps,
-    //   color: 'rgba(192,210,225,0.7)',
-    //   stroke: 'rgba(192,210,225,0.95)'
-    // }, {
-    //   name: "Avg. Comments per response",
-    //   data: cpr,
-    //   color: 'rgba(230,240,226,0.7)',
-    //   stroke: 'rgba(230,240,226,0.95)'
-    // } ] } );
-    // graph.render();
 //   }
 // });
 
-counter = 7;
+h = 0;
+c = 0;
 var addData = function(hps, cpr) {
-  hps.push({x:counter, y:20});
-  cpr.push({x:counter, y:20});
-  counter++;
+  hps.push({x: new Date().getTime(), y: h+ Math.random()*4});
+  if (hps.length > 10) { hps.shift() };
+  cpr.push({x: new Date().getTime(), y: c+ Math.random()*4});
+  if (cpr.length > 10) { cpr.shift() };
 }
 
 setInterval( function() {
