@@ -18,12 +18,12 @@ var prepCpr = function(stats) {
 }
 
 var makeGraph = function () {
-  var hps = [{x: 1, y: 1}];
-  var cpr = [{x: 1, y: 1}];
+  var hps = [{x: 0, y: 0}];
+  var cpr = [{x: 0, y: 0}];
   if (Classes.findOne() !== undefined) {
     var stats = Classes.findOne().statsDigest;
-    var hps = prepHps(stats);
-    var cpr = prepCpr(stats);
+    hps = prepHps(stats);
+    cpr = prepCpr(stats);
   };
   graph = new Rickshaw.Graph( {
   	element: document.querySelector("#graph"),
@@ -95,4 +95,24 @@ var reRenderGraph = function() {
 // Event Listeners
 Meteor.startup(makeGraph);
 $(window).on('resize', reRenderGraph);
+setInterval( function() {
+  if (Classes.findOne() !== undefined) {
+    var stats = Classes.findOne().statsDigest;
+    hps = prepHps(stats);
+    cpr = prepCpr(stats);
+  };
+  graph.configure( {
+	series: [ {
+    name: "Avg. Helpfuls per student",
+    data: hps,
+		color: 'rgba(192,210,225,0.7)',
+		stroke: 'rgba(192,210,225,0.95)'
+	}, {
+    name: "Avg. Comments per response",
+    data: cpr,
+		color: 'rgba(230,240,226,0.7)',
+		stroke: 'rgba(230,240,226,0.95)'
+	} ] } );
+	graph.render();
+}, 300 );
 
