@@ -1,3 +1,5 @@
+var graphDataReady
+
 // [numerator, denominator, time]
 var prepStats = function(ary) {
   var n = ary[0];
@@ -16,10 +18,13 @@ var prepCpr = function(stats) {
 }
 
 var makeGraph = function () {
-  
-  var stats = Classes.findOne().statsDigest;
-  var hps = prepHps(stats);
-  var cpr = prepCpr(stats);
+  var hps = [{x: 1, y: 1}];
+  var cpr = [{x: 1, y: 1}];
+  if (Classes.findOne() !== undefined) {
+    var stats = Classes.findOne().statsDigest;
+    var hps = prepHps(stats);
+    var cpr = prepCpr(stats);
+  };
   graph = new Rickshaw.Graph( {
   	element: document.querySelector("#graph"),
   	width: ($("#graph_container").width() - 45), // responsive resize
@@ -41,7 +46,7 @@ var makeGraph = function () {
   });
   graph.renderer.unstack = true;
   graph.render();
-  
+
   // When we use this for flipped we will let the function be a call to momment(n).format(..)
   var format = function(n) {
   	var map = {
@@ -55,7 +60,7 @@ var makeGraph = function () {
   	};
   	return map[n];
   }
-  
+
   var x_axis = new Rickshaw.Graph.Axis.X({
       graph: graph,
       orientation: 'bottom',
@@ -64,7 +69,7 @@ var makeGraph = function () {
       element: document.getElementById('x_axis'),
   });
   x_axis.render();
-  
+
   var y_axis = new Rickshaw.Graph.Axis.Y({
       graph: graph,
       orientation: 'left',
@@ -74,7 +79,7 @@ var makeGraph = function () {
       element: document.getElementById('y_axis')
   });
   y_axis.render();
-  
+
   var legend = new Rickshaw.Graph.Legend( {
   	graph: graph,
   	element: document.getElementById('legend')
