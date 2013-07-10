@@ -4,6 +4,9 @@
     "font-awesome": {},
     "meteor-rickshaw": {
       "path": "/Users/estk/git/meteor-rickshaw"
+    },
+    "meteor-d3": {
+      "path": "/Users/estk/git/meteor-d3"
     }
   }
 }

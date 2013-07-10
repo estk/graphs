@@ -6,6 +6,9 @@
       "font-awesome": {},
       "meteor-rickshaw": {
         "path": "../meteor-rickshaw"
+      },
+      "meteor-d3": {
+        "path": "../meteor-d3"
       }
     },
     "packages": {
@@ -21,6 +24,9 @@
       },
       "meteor-rickshaw": {
         "path": "../meteor-rickshaw"
+      },
+      "meteor-d3": {
+        "path": "../meteor-d3"
       }
     }
   }
