@@ -20,6 +20,7 @@ if (Classes.find().count() === 0) {
 
 if (ClassStatistics.find().count() === 0) {
   var hc = 0, cc = 0, rc = 0, sc = 0;
+  var date = moment().subtract("days", 19);
   _.times(20, function (n) {
     hc+=Math.round( Math.random()*5 )+1;
     cc+=Math.round( Math.random()*5 )+1;
@@ -27,11 +28,12 @@ if (ClassStatistics.find().count() === 0) {
     sc+=Math.round( Math.random()*5 )+1;
     ClassStatistics.insert({
       classId: cid,
-      date: new Date().getTime(),
+      date: date.toDate().getTime(),
       helpfulCount: hc,
       commentCount: cc,
       responseCount: rc,
       studentCount: sc
-    })
+    } )
+    date = date.add("days", 1);
   } );
 }
