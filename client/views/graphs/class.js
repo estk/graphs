@@ -10,14 +10,20 @@ Template.graphsClass.rendered = function() {
 
     Deps.autorun(function() {
       var cls = Classes.findOne();
+      var element = document.querySelector("#graph");
 
       console.log('cls is:' + cls);
       if (cls) {
-        var stats = ClassStatistics.find({classId: cls._id}, {limit: 10}).fetch();
+        cid = cls._id;
+        var statary = ClassStatistics
+          .find({classId: cls._id}, {sort: {date: -1}, limit:11})
+          .fetch();
+        stats = _.sortBy(statary, function(o){return o.date});
         console.log('stats is:' + stats);
 
         if (stats) {
-          // update graph here
+          MyGraph.init(element, stats);
+          MyGraph.update(stats);
         }
       }
     });
@@ -38,19 +44,20 @@ var reRenderGraph = function() {
 Meteor.startup( function () {
   $(window).on('resize', reRenderGraph);
 
-  h = 5;
-  c = 5;
-  var addData = function(hps, cpr) {
-    hps.push({x: new Date().getTime(), y: h+ Math.random()*4});
-    if (hps.length > 10) { hps.shift() };
-    cpr.push({x: new Date().getTime(), y: c+ Math.random()*4});
-    if (cpr.length > 10) { cpr.shift() };
-  }
-
-  setInterval( function() {
-    // addData(hps, cpr);
-    MyGraph.init();
-    MyGraph.graph.update();
-  }, 3000 );
+  // setInterval( function() {
+  //   hc = cc = rc = sc = 1;
+  //   hc+=Math.round( Math.random()*5 )+1;
+  //   cc+=Math.round( Math.random()*5 )+1;
+  //   rc+=Math.round( Math.random()*5 )+1;
+  //   sc+=Math.round( Math.random()*5 )+1;
+  //   ClassStatistics.insert({
+  //     classId: cid,
+  //     date: new Date().getTime(),
+  //     helpfulCount: hc,
+  //     commentCount: cc,
+  //     responseCount: rc,
+  //     studentCount: sc
+  //   });
+  // }, 5000 );
 });
 
