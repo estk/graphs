@@ -31,7 +31,7 @@ MyGraph = {
     graph.render();
 
     // When we use this for flipped we will let the function be a call to 
-    var format = function(n) { return moment(n).format("DD.MM.YY") };
+    var format = function(n) { return moment(n).format("MMM D") };
 
     var x_axis = new Rickshaw.Graph.Axis.X({
         graph: graph,
