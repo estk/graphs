@@ -1,0 +1,1 @@
+ClassStatistics = new Meteor.Collection('classStatistics');

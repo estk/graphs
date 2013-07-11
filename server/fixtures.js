@@ -1,6 +1,6 @@
 if (Classes.find().count() === 0) {
   
-  Classes.insert({
+  cid = Classes.insert({
     name         : 'Science',
     code         : 'SC710',
     subject      : 'Science',
@@ -16,4 +16,22 @@ if (Classes.find().count() === 0) {
       responses  : [10,20,30,40,50,60,70]
     }
   })
+}
+
+
+
+if (ClassStatistics.find().count() === 0) {
+  var cc = 0, rc = 0, sc = 0;
+  _.times(25, function (n) {
+    cc+=Math.round( Math.random()*5 );
+    rc+=Math.round( Math.random()*5 );
+    sc+=Math.round( Math.random()*5 );
+    ClassStatistics.insert({
+      classId: cid,
+      date: new Date().getTime(),
+      commentCount: cc,
+      responseCount: rc,
+      studentCount: sc
+    })
+  } );
 }
