@@ -18,17 +18,17 @@ if (Classes.find().count() === 0) {
   })
 }
 
-
-
 if (ClassStatistics.find().count() === 0) {
-  var cc = 0, rc = 0, sc = 0;
+  var hc = 0, cc = 0, rc = 0, sc = 0;
   _.times(25, function (n) {
+    hc+=Math.round( Math.random()*5 );
     cc+=Math.round( Math.random()*5 );
     rc+=Math.round( Math.random()*5 );
     sc+=Math.round( Math.random()*5 );
     ClassStatistics.insert({
       classId: cid,
       date: new Date().getTime(),
+      helpfulCount: hc,
       commentCount: cc,
       responseCount: rc,
       studentCount: sc
