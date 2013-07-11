@@ -1,11 +1,13 @@
-<template name="graphClass">
+<template name="graphsClass">
   <div id="graph_area">
     <div id="percent-flips">% of flips completed</div>
-    <div id ="graph_container">
-      <div id="y_axis"></div>
-      <div id="graph"></div>
-      <div id="x_axis"></div>
-    </div>
+    {{#constant}}
+      <div id ="graph_container">
+        <div id="y_axis"></div>
+        <div id="graph"></div>
+        <div id="x_axis"></div>
+      </div>
+    {{/constant}}
     <div id="legend"></div>
   </div>
 </template>
