@@ -6,62 +6,70 @@ body {
   width: 100%;
   display: inline-block;
   background-color: rgba(241,241,241,1); 
-}
-#percent-flips {
-  text-align: center;
-}
-#graph_container {
-  position: relative;
-  padding: 20px;
-  background: white;
-  margin: 0 3px 0 3px;
-}
-#graph {
-  overflow: auto;
-  position: relative;
-  top: 0px;
-  left: 25px;
-  right: 20px;
-  display: inline-block;
-  .x_grid_d3 {
-    opacity: 0 !important; 
+
+  #percent-flips {
+    text-align: center;
   }
-  .y_grid {
-    opacity: 0 !important; 
+  
+  #graph_container {
+    position: relative;
+    padding: 20px;
+    background: white;
+    margin: 0 3px 0 3px;
+    
+    #graph {
+      overflow: auto;
+      position: relative;
+      top: 0px;
+      left: 25px;
+      right: 20px;
+      display: inline-block;
+      svg { 
+        background-color: rgba(241,241,241,1); 
+      }
+      // Disable x-axis grid
+      .x_grid_d3 {
+        opacity: 0 !important; 
+      }
+      // Disable x-axis grid
+      .y_grid {
+        opacity: 0 !important; 
+      }
+    }
+    
+    #y_axis {
+      display: inline-block;
+      position: absolute;
+      top: 20px;
+      bottom: 0;
+      width: 25px;
+      path, line {
+        stroke: rgba(0,0,0,0);
+      }
+    }
+    
+    #x_axis {
+      position: relative;
+      top: 0;
+      bottom: 0;
+      height: 30px;
+      left: 20px;
+      path, line {
+        stroke: rgba(0,0,0,0);
+      }
+    }
   }
-  svg { 
-    background-color: rgba(241,241,241,1); 
-  }
-}
-#y_axis {
-  display: inline-block;
-  position: absolute;
-  top: 20px;
-  bottom: 0;
-  width: 25px;
-  path, line {
-    stroke: rgba(0,0,0,0);
-  }
-}
-#x_axis {
-  position: relative;
-  top: 0;
-  bottom: 0;
-  height: 30px;
-  left: 20px;
-  path, line {
-    stroke: rgba(0,0,0,0);
-  }
-}
-#legend {
-  background: rgba(0,0,0,0);
-  font-family: Sans-Serif;
-  font-size: 10px;
-  i { 
-    margin: .5em;
-    font-weight: 900;
-  }
-  li {
-    display: inline;
+  
+  #legend {
+    background: rgba(0,0,0,0);
+    font-family: Sans-Serif;
+    font-size: 10px;
+    i { 
+      margin: .5em;
+      font-weight: 900;
+    }
+    li {
+      display: inline;
+    }
   }
 }

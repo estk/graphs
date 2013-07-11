@@ -1,20 +1,38 @@
 MyGraph = {
   graph: null,
+  element: null,
   update: function (stats) {
-    this.graph.series[0].data = _.map(stats, prepHps);
-    this.graph.series[1].data = _.map(stats, prepCpr);
-    this.graph.update();
+    if (this.graph) {
+      this.graph.series[0].data = _.map(stats, prepHps);
+      this.graph.series[1].data = _.map(stats, prepCpr);
+      this.graph.update();
+    }
   },
-  init: _.once(function (element, stats) {
+  resize: function () {
+    if (this.graph) {
+      this.graph.configure({width: ($("#graph_container").width() - 45)});
+      this.graph.render();
+    }
+  },
+  clear: function () {
+    this.graph = null;
+    this.init(this.element);
+  },
+  init: function (element, stats) {
+    this.element = element;
     var hps = _.map(stats, prepHps);
     var cpr = _.map(stats, prepCpr);
+    if (! stats) {
+      hps.push({x: 0, y: 0});
+      cpr.push({x: 0, y: 0});
+    }
     var graph = new Rickshaw.Graph({
       element: element,
       width: ($("#graph_container").width() - 45), // responsive resize
       height: 110,
       renderer: 'area',
       stroke: true,
-      padding: { top: 0.01, right: 0.20, bottom: 0.01, left: 0 },
+      padding: {top: 0.05, right: 0.20, bottom: 0.01, left: 0},
       series: [ {
         name: "Avg. Helpfuls per student",
         data: hps,
@@ -29,6 +47,17 @@ MyGraph = {
     });
     graph.renderer.unstack = true;
     graph.render();
+    this.graph = graph;
+
+    var y_axis = new Rickshaw.Graph.Axis.Y({
+        graph: graph,
+        orientation: 'left',
+        grid: false,
+        ticks: 3,
+        tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+        element: document.getElementById('y_axis')
+    });
+    y_axis.render();
 
     // When we use this for flipped we will let the function be a call to 
     var format = function(n) { return moment(n).format("MMM D") };
@@ -42,22 +71,11 @@ MyGraph = {
     });
     x_axis.render();
 
-    var y_axis = new Rickshaw.Graph.Axis.Y({
-        graph: graph,
-        orientation: 'left',
-        grid: false,
-        ticks: 3,
-        tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-        element: document.getElementById('y_axis')
-    });
-    y_axis.render();
-
     var legend = new Rickshaw.Graph.Legend( {
       graph: graph,
       element: document.getElementById('legend')
     });
-    this.graph = graph;
-  })
+  }
 };
 
 // [numerator, denominator, time]

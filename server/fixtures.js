@@ -1,31 +1,22 @@
-if (Classes.find().count() === 0) {
-  
-  cid = Classes.insert({
-    name         : 'Science',
-    code         : 'SC710',
-    subject      : 'Science',
-    year         : '7.1',
-    status       : 'open',
-    _teacherName : 'Tom Halbert',
-
-    statsDigest: {
-      times      : [1,2,3,4,5,6,7],
-      students   : [21,22,23,24,25,26,27],
-      helpfuls   : [5,10,15,20,25,30,35],
-      comments   : [2,4,8,16,32,64,128],
-      responses  : [10,20,30,40,50,60,70]
-    }
-  })
-}
-
-if (ClassStatistics.find().count() === 0) {
-  var hc = 0, cc = 0, rc = 0, sc = 0;
+if (Classes.find().count() === 0 || ClassStatistics.find().count() === 0) {
+  // Create a sample class.
+  var cid = Classes.insert({
+    name: 'Science',
+    code: 'SC710',
+    subject: 'Science',
+    year: '7.1',
+    status: 'open',
+    _teacherName: 'Tom Halbert',
+  });
+  // Prepare and insert sample statistics for the class
+  var hc = 1, cc = 1, rc = 1, sc = 1;
   var date = moment().subtract("days", 19);
   _.times(20, function (n) {
-    hc+=Math.round( Math.random()*5 )+1;
-    cc+=Math.round( Math.random()*5 )+1;
-    rc+=Math.round( Math.random()*5 )+1;
-    sc+=Math.round( Math.random()*5 )+1;
+    hc += Math.round(Math.random() * 5 );
+    cc += Math.round(Math.random() * 5 );
+    rc += Math.round(Math.random() * 5 );
+    sc += Math.round(Math.random() * 5 );
+    
     ClassStatistics.insert({
       classId: cid,
       date: date.toDate().getTime(),
@@ -33,7 +24,7 @@ if (ClassStatistics.find().count() === 0) {
       commentCount: cc,
       responseCount: rc,
       studentCount: sc
-    } )
+    });
     date = date.add("days", 1);
-  } );
+  });
 }
