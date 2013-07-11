@@ -4,11 +4,9 @@
     "basePackages": {
       "moment": {},
       "font-awesome": {},
-      "Rickshaw": {
-        "path": "../meteor-rickshaw"
-      },
-      "d3": {
-        "path": "../meteor-d3"
+      "rickshaw": {
+        "git": "https://github.com/estk/meteor-rickshaw",
+        "branch": "master"
       }
     },
     "packages": {
@@ -22,11 +20,15 @@
         "tag": "v3.2.0",
         "commit": "2cba6f907a2579cae2d399b522f9544c13d5e091"
       },
-      "Rickshaw": {
-        "path": "../meteor-rickshaw"
+      "rickshaw": {
+        "git": "https://github.com/estk/meteor-rickshaw",
+        "branch": "master",
+        "commit": "6e58f4080a4546a5101c03f1888224a9fbb64976"
       },
       "d3": {
-        "path": "../meteor-d3"
+        "git": "https://github.com/estk/meteor-d3",
+        "branch": "master",
+        "commit": "0aaf3e9281bfbd2f25929e95d751ded467c8a484"
       }
     }
   }

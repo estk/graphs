@@ -2,11 +2,8 @@
   "packages": {
     "moment": {},
     "font-awesome": {},
-    "Rickshaw": {
-      "path": "/Users/estk/git/meteor-rickshaw"
-    },
-    "d3": {
-      "path": "/Users/estk/git/meteor-d3"
+    "rickshaw": {
+      "git": "https://github.com/estk/meteor-rickshaw"
     }
   }
 }
