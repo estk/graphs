@@ -14,10 +14,6 @@ MyGraph = {
       this.graph.render();
     }
   },
-  clear: function () {
-    this.graph = null;
-    this.init(this.element);
-  },
   init: function (element, stats) {
     this.element = element;
     var hps = _.map(stats, prepHps);

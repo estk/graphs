@@ -20,7 +20,6 @@ Template.graphsClass.rendered = function() {
 };
 
 Template.graphsClass.destroyed = function() {
-  MyGraph.clear();
 };
 
 Meteor.startup(function () {
