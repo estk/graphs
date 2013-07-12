@@ -10,9 +10,9 @@ Template.graphsClass.rendered = function() {
         var statAry = ClassStatistics
           .find({classId: cls._id}, {sort: {date: -1}, limit:11})
           .fetch();
-        var stats = _.sortBy(statAry, function(o){return o.date});
-        if (stats) {
-          MyGraph.update(stats);
+        var sortedStats = _.sortBy(statAry, function(o){return o.date});
+        if (sortedStats) {
+          MyGraph.update(sortedStats);
         }
       }
     });

@@ -16,11 +16,11 @@ MyGraph = {
   },
   init: function (element, stats) {
     this.element = element;
-    var hps = _.map(stats, prepHps);
-    var cpr = _.map(stats, prepCpr);
+    var helpfulsPerStudent = _.map(stats, prepHps);
+    var commentsPerResponse = _.map(stats, prepCpr);
     if (! stats) {
-      hps.push({x: 0, y: 0});
-      cpr.push({x: 0, y: 0});
+      helpfulsPerStudent.push({x: 0, y: 0});
+      commentsPerResponse.push({x: 0, y: 0});
     }
     var graph = new Rickshaw.Graph({
       element: element,
@@ -31,12 +31,12 @@ MyGraph = {
       padding: {top: 0.05, right: 0.20, bottom: 0.01, left: 0},
       series: [ {
         name: "Avg. Helpfuls per student",
-        data: hps,
+        data: helpfulsPerStudent,
         color: 'rgba(192,210,225,0.7)',
         stroke: 'rgba(192,210,225,0.95)'
       }, {
         name: "Avg. Comments per response",
-        data: cpr,
+        data: commentsPerResponse,
         color: 'rgba(230,240,226,0.7)',
         stroke: 'rgba(230,240,226,0.95)'
       } ]
