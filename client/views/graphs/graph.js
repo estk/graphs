@@ -1,3 +1,12 @@
+Template.graph.rendered = function () {
+  if (! this.rendered) {
+    this.rendered = true;
+    graphOptions = this.data;
+    console.log(graphOptions);
+    graph = new GraphWrapper(graphOptions);
+  }
+}
+
 GraphWrapper = function (graphOptions) {
   this.graph = null
   this.yAxis = null
@@ -6,6 +15,7 @@ GraphWrapper = function (graphOptions) {
   
   var element = document.querySelector("#graph");
   graphOptions.graphOpts.element = element;
+  graphOptions.graphOpts.width= $("#graph_container").width() - 45;
   var graph = new Rickshaw.Graph(graphOptions.graphOpts);
   graph.renderer.unstack = true;
   graph.render();

@@ -1,14 +1,6 @@
-Meteor.startup(function () {
-  $(window).on('resize', function () { 
-    MyGraph.resize(($("#graph_container").width() - 45)); 
-  });
-});
-
-Template.classesShow.rendered = function() {
+Template.classesShow.rendered = function () {
   if (! this.rendered) {
     this.rendered = true;
-    var graphOptions = makeGraphOptions();
-    var graph = new GraphWrapper(graphOptions);
     Deps.autorun(function() {
       var cls = Classes.findOne();
       if (cls) {
@@ -19,8 +11,17 @@ Template.classesShow.rendered = function() {
         if (sortedStats) updateGraph(graph, sortedStats);
       }
     });
+    $(window).on('resize', function () { 
+      graph.resize(($("#graph_container").width() - 45)); 
+    });
   }
 }
+
+Template.classesShow.helpers({
+  graphOptions: function () {
+    return makeGraphOptions();
+  }
+});
 
 var updateGraph = function (graph, stats) {
   var data = []
@@ -44,7 +45,6 @@ var makeGraphOptions = function () {
   var format = function(n) { return moment(n).format("MMM D") };
   return {
     graphOpts: {
-      width: ($("#graph_container").width() - 45), // responsive resize
       height: 110,
       renderer: 'area',
       stroke: true,
