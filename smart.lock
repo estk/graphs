@@ -23,7 +23,7 @@
       "rickshaw": {
         "git": "https://github.com/estk/meteor-rickshaw",
         "branch": "master",
-        "commit": "6e58f4080a4546a5101c03f1888224a9fbb64976"
+        "commit": "7a29391cb33f0b15f9cc11865807eeff44551227"
       },
       "d3": {
         "git": "https://github.com/estk/meteor-d3",
