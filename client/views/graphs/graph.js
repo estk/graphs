@@ -2,8 +2,11 @@ Template.graph.rendered = function () {
   if (! this.rendered) {
     this.rendered = true;
     graphOptions = this.data;
-    console.log(graphOptions);
     graph = new GraphWrapper(graphOptions);
+
+    $(window).on('resize', function () { 
+      graph.resize(($("#graph_container").width() - 45)); 
+    });
   }
 }
 

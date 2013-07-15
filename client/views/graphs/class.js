@@ -11,9 +11,6 @@ Template.classesShow.rendered = function () {
         if (sortedStats) updateGraph(graph, sortedStats);
       }
     });
-    $(window).on('resize', function () { 
-      graph.resize(($("#graph_container").width() - 45)); 
-    });
   }
 }
 
