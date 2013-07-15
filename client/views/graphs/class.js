@@ -1,30 +1,23 @@
-Template.classesShow.rendered = function () {
-  if (! this.rendered) {
-    this.rendered = true;
-    Deps.autorun(function() {
-      var cls = Classes.findOne();
-      if (cls) {
-        var statAry = ClassStatistics
-          .find({classId: cls._id}, {sort: {date: -1}, limit:10})
-          .fetch();
-        var sortedStats = _.sortBy(statAry, function(o){return o.date});
-        if (sortedStats) updateGraph(graph, sortedStats);
-      }
-    });
-  }
-}
-
 Template.classesShow.helpers({
   graphOptions: function () {
-    return makeGraphOptions();
+    var options = makeGraphOptions();
+    options.seriesComputation = makeSeries;
+    return options;
   }
 });
 
-var updateGraph = function (graph, stats) {
-  var data = []
-  data[0] = _.map(stats, prepHps);
-  data[1] = _.map(stats, prepCpr);
-  graph.update(data);
+var makeSeries = function () {
+  var cls = Classes.findOne();
+  if (cls) {
+    var statAry = ClassStatistics
+      .find({classId: cls._id}, {sort: {date: -1}, limit:10})
+      .fetch();
+    var sortedStats = _.sortBy(statAry, function(o){return o.date});
+  } else sortedStats = null;
+  var series = []
+  series[0] = _.map(sortedStats, prepHps);
+  series[1] = _.map(sortedStats, prepCpr);
+  return series;
 }
 var prepStat = function(n, d, t) {
   return {y: n/d, x: t};

@@ -1,8 +1,12 @@
 Template.graph.rendered = function () {
   if (! this.rendered) {
     this.rendered = true;
+    
     graphOptions = this.data;
     graph = new GraphWrapper(this, graphOptions);
+    Deps.autorun(function () {
+      graph.update();
+    });
 
     $(window).on('resize', function () { 
       graph.resize(($("#graph_container").width() - 45)); 
@@ -15,6 +19,7 @@ GraphWrapper = function (template, graphOptions) {
   this.yAxis = null
   this.xAxis = null
   this.legend = null
+  this.seriesComputation = graphOptions.seriesComputation;
   
   var element = template.find("#graph");
   graphOptions.graphOpts.element = element;
@@ -42,7 +47,10 @@ GraphWrapper = function (template, graphOptions) {
 }
 
 GraphWrapper.prototype = {
-  update: function (data) {
+  update: function () {
+    this.updateData(this.seriesComputation());
+  },
+  updateData: function (data) {
     if (this.graph) {
       for (var i=0;i<this.graph.series.length;i++)
         this.graph.series[i].data = data[i];
