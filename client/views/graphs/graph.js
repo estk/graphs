@@ -2,7 +2,7 @@ Template.graph.rendered = function () {
   if (! this.rendered) {
     this.rendered = true;
     graphOptions = this.data;
-    graph = new GraphWrapper(graphOptions);
+    graph = new GraphWrapper(this, graphOptions);
 
     $(window).on('resize', function () { 
       graph.resize(($("#graph_container").width() - 45)); 
@@ -10,33 +10,33 @@ Template.graph.rendered = function () {
   }
 }
 
-GraphWrapper = function (graphOptions) {
+GraphWrapper = function (template, graphOptions) {
   this.graph = null
   this.yAxis = null
   this.xAxis = null
   this.legend = null
   
-  var element = document.querySelector("#graph");
+  var element = template.find("#graph");
   graphOptions.graphOpts.element = element;
-  graphOptions.graphOpts.width= $("#graph_container").width() - 45;
+  graphOptions.graphOpts.width = $(template.find("#graph_container")).width() - 45;
   var graph = new Rickshaw.Graph(graphOptions.graphOpts);
   graph.renderer.unstack = true;
   graph.render();
   this.graph = graph;
   
   graphOptions.yOpts.graph = graph;
-  graphOptions.yOpts.element= document.getElementById('y_axis')
+  graphOptions.yOpts.element= template.find("#y_axis")
   this.yAxis = new Rickshaw.Graph.Axis.Y(graphOptions.yOpts);
   this.yAxis.render();
   
   graphOptions.xOpts.graph = graph;
-  graphOptions.xOpts.element= document.getElementById('x_axis')
+  graphOptions.xOpts.element= template.find("#x_axis")
   this.xAxis = new Rickshaw.Graph.Axis.X(graphOptions.xOpts);
   this.xAxis.render();
 
   this.legend = new Rickshaw.Graph.Legend( {
     graph: graph,
-    element: document.querySelector("#legend")
+    element: template.find("#legend")
   });
   return this;
 }
