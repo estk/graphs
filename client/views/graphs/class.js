@@ -8,7 +8,7 @@ Template.classesShow.rendered = function() {
   if (! this.rendered) {
     this.rendered = true;
     var graphOptions = makeGraphOptions();
-    var graph = MyGraph.init(graphOptions);
+    var graph = new GraphWrapper(graphOptions);
     Deps.autorun(function() {
       var cls = Classes.findOne();
       if (cls) {
@@ -16,17 +16,17 @@ Template.classesShow.rendered = function() {
           .find({classId: cls._id}, {sort: {date: -1}, limit:10})
           .fetch();
         var sortedStats = _.sortBy(statAry, function(o){return o.date});
-        if (sortedStats) updateGraph(sortedStats);
+        if (sortedStats) updateGraph(graph, sortedStats);
       }
     });
   }
 }
 
-var updateGraph = function (stats) {
+var updateGraph = function (graph, stats) {
   var data = []
   data[0] = _.map(stats, prepHps);
   data[1] = _.map(stats, prepCpr);
-  MyGraph.update(data);
+  graph.update(data);
 }
 var prepStat = function(n, d, t) {
   return {y: n/d, x: t};
@@ -64,13 +64,11 @@ var makeGraphOptions = function () {
     yOpts: {
       orientation: 'left',
       ticks: 3,
-      tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-      element: document.getElementById('y_axis')
+      tickFormat: Rickshaw.Fixtures.Number.formatKMBT
     },
     xOpts: {
       orientation: 'bottom',
       tickFormat: format,
-      element: document.getElementById('x_axis'),
     }
   }
 }
