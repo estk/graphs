@@ -5,10 +5,10 @@ Meteor.startup(function () {
 MyGraph = {
   graph: null,
   element: null,
-  update: function (stats) {
+  update: function (data) {
     if (this.graph) {
-      this.graph.series[0].data = _.map(stats, prepHps);
-      this.graph.series[1].data = _.map(stats, prepCpr);
+      for (var i=0;i<this.graph.series.length;i++)
+        this.graph.series[i].data = data[i];
       this.graph.update();
     }
   },
@@ -25,11 +25,11 @@ MyGraph = {
     graph.renderer.unstack = true;
     graph.render();
     this.graph = graph;
-
+    
     graphOptions.yOpts.graph = graph;
     var y_axis = new Rickshaw.Graph.Axis.Y(graphOptions.yOpts);
     y_axis.render();
-
+    
     graphOptions.xOpts.graph = graph;
     var x_axis = new Rickshaw.Graph.Axis.X(graphOptions.xOpts);
     x_axis.render();
@@ -38,16 +38,6 @@ MyGraph = {
       graph: graph,
       element: document.querySelector("#legend")
     });
+    return graph;
   }
-};
-
-// [numerator, denominator, time]
-var prepStat = function(n, d, t) {
-  return {y: n/d, x: t};
-};
-var prepHps = function(stat) {
-  return prepStat(stat.helpfulCount, stat.studentCount, stat.date);
-};
-var prepCpr = function(stat) {
-  return prepStat(stat.commentCount, stat.responseCount, stat.date);
 };

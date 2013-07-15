@@ -1,7 +1,8 @@
 Template.classesShow.rendered = function() {
   if (! this.rendered) {
     this.rendered = true;
-    initializeGraph();
+    var graphOptions = makeGraphOptions();
+    var graph = MyGraph.init(graphOptions);
     Deps.autorun(function() {
       var cls = Classes.findOne();
       if (cls) {
@@ -9,16 +10,31 @@ Template.classesShow.rendered = function() {
           .find({classId: cls._id}, {sort: {date: -1}, limit:10})
           .fetch();
         var sortedStats = _.sortBy(statAry, function(o){return o.date});
-        if (sortedStats) MyGraph.update(sortedStats);
+        if (sortedStats) updateGraph(sortedStats);
       }
     });
   }
 }
 
-var initializeGraph = function () {
-  var graphOptions = makeGraphOptions();
-  MyGraph.init(graphOptions);
+var updateGraph = function (stats) {
+  var data = []
+  data[0] = _.map(stats, prepHps);
+  data[1] = _.map(stats, prepCpr);
+  console.log(data);
+  MyGraph.update(data);
 }
+
+// [numerator, denominator, time]
+var prepStat = function(n, d, t) {
+  return {y: n/d, x: t};
+};
+var prepHps = function(stat) {
+  return prepStat(stat.helpfulCount, stat.studentCount, stat.date);
+};
+var prepCpr = function(stat) {
+  return prepStat(stat.commentCount, stat.responseCount, stat.date);
+};
+
 var makeGraphOptions = function () {
   var helpfulsPerStudent = [{x: 0, y: 0}];
   var commentsPerResponse = [{x: 0, y: 0}];
