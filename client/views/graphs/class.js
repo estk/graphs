@@ -1,8 +1,6 @@
 Template.classesShow.helpers({
   graphOptions: function () {
-    var options = makeGraphOptions();
-    options.seriesComputation = makeSeries;
-    return options;
+    return makeGraphOptions();
   }
 });
 
@@ -34,6 +32,7 @@ var makeGraphOptions = function () {
   var commentsPerResponse = [{x: 0, y: 0}];
   var format = function(n) { return moment(n).format("MMM D") };
   return {
+    seriesComputation: makeSeries,
     graphOpts: {
       height: 110,
       renderer: 'area',

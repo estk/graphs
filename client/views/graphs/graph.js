@@ -1,3 +1,5 @@
+// To use this template we need to render #with a graphOptions object which has the following fields: [seriesComputation, graphOpts, yOpts, xOpts]. The last 3 are Rickshaw options objects, and the first is a data prep function. (See GraphWrapper)
+
 Template.graph.rendered = function () {
   if (! this.rendered) {
     this.rendered = true;
@@ -13,6 +15,9 @@ Template.graph.rendered = function () {
     });
   }
 }
+
+// To use GraphWrapper we need to pass the current template in which we can find the requisite DOM objects, options for Rickshaw.Graph, Rickshaw.Axis.X,Y, and a function which prepares the series.
+// seriesComputation :: (Depends on Collection) -> [[{x: float, y: float}]]
 
 GraphWrapper = function (template, graphOptions) {
   this.graph = null
@@ -48,9 +53,9 @@ GraphWrapper = function (template, graphOptions) {
 
 GraphWrapper.prototype = {
   update: function () {
-    this.updateData(this.seriesComputation());
+    this._updateData(this.seriesComputation());
   },
-  updateData: function (data) {
+  _updateData: function (data) {
     if (this.graph) {
       for (var i=0;i<this.graph.series.length;i++)
         this.graph.series[i].data = data[i];
