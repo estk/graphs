@@ -1,3 +1,9 @@
+Meteor.startup(function () {
+  $(window).on('resize', function () { 
+    MyGraph.resize(($("#graph_container").width() - 45)); 
+  });
+});
+
 Template.classesShow.rendered = function() {
   if (! this.rendered) {
     this.rendered = true;
@@ -20,20 +26,17 @@ var updateGraph = function (stats) {
   var data = []
   data[0] = _.map(stats, prepHps);
   data[1] = _.map(stats, prepCpr);
-  console.log(data);
   MyGraph.update(data);
 }
-
-// [numerator, denominator, time]
 var prepStat = function(n, d, t) {
   return {y: n/d, x: t};
-};
+}
 var prepHps = function(stat) {
   return prepStat(stat.helpfulCount, stat.studentCount, stat.date);
-};
+}
 var prepCpr = function(stat) {
   return prepStat(stat.commentCount, stat.responseCount, stat.date);
-};
+}
 
 var makeGraphOptions = function () {
   var helpfulsPerStudent = [{x: 0, y: 0}];

@@ -1,10 +1,8 @@
-Meteor.startup(function () {
-  $(window).on('resize', function () { MyGraph.resize(); });
-});
-
 MyGraph = {
   graph: null,
   element: null,
+  yAxis: null,
+  xAxis: null,
   update: function (data) {
     if (this.graph) {
       for (var i=0;i<this.graph.series.length;i++)
@@ -12,9 +10,9 @@ MyGraph = {
       this.graph.update();
     }
   },
-  resize: function () {
+  resize: function (width) {
     if (this.graph) {
-      this.graph.configure({width: ($("#graph_container").width() - 45)});
+      this.graph.configure({width: width});
       this.graph.render();
     }
   },
@@ -27,17 +25,17 @@ MyGraph = {
     this.graph = graph;
     
     graphOptions.yOpts.graph = graph;
-    var y_axis = new Rickshaw.Graph.Axis.Y(graphOptions.yOpts);
-    y_axis.render();
+    this.yAxis = new Rickshaw.Graph.Axis.Y(graphOptions.yOpts);
+    this.yAxis.render();
     
     graphOptions.xOpts.graph = graph;
-    var x_axis = new Rickshaw.Graph.Axis.X(graphOptions.xOpts);
-    x_axis.render();
+    this.xAxis = new Rickshaw.Graph.Axis.X(graphOptions.xOpts);
+    this.xAxis.render();
 
-    var legend = new Rickshaw.Graph.Legend( {
+    this.legend = new Rickshaw.Graph.Legend( {
       graph: graph,
       element: document.querySelector("#legend")
     });
-    return graph;
+    return this;
   }
 };
