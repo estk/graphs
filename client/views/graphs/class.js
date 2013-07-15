@@ -41,13 +41,13 @@ var makeGraphOptions = function () {
       series: [ {
         name: "Avg. Helpfuls per student",
         data: helpfulsPerStudent,
-        color: 'rgba(192,210,225,0.7)',
-        stroke: 'rgba(192,210,225,0.95)'
+        color: 'rgba(111,186,86,0.2)',
+        stroke: 'rgba(111,186,86,0.95)'
       }, {
         name: "Avg. Comments per response",
         data: commentsPerResponse,
-        color: 'rgba(230,240,226,0.7)',
-        stroke: 'rgba(230,240,226,0.95)'
+        color: 'rgba(116,165,217,0.2)',
+        stroke: 'rgba(116,165,217,0.95)'
       } ]
     },
     yOpts: {
