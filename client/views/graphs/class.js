@@ -1,27 +1,29 @@
 Template.classesShow.rendered = function() {
   if (! this.rendered) {
     this.rendered = true;
-    makeGraph();
+    initializeGraph();
     Deps.autorun(function() {
       var cls = Classes.findOne();
       if (cls) {
         var statAry = ClassStatistics
-          .find({classId: cls._id}, {sort: {date: -1}, limit:11})
+          .find({classId: cls._id}, {sort: {date: -1}, limit:10})
           .fetch();
         var sortedStats = _.sortBy(statAry, function(o){return o.date});
-        if (sortedStats) {
-          MyGraph.update(sortedStats);
-        }
+        if (sortedStats) MyGraph.update(sortedStats);
       }
     });
   }
-};
+}
 
-var makeGraph = function () {
+var initializeGraph = function () {
+  var graphOptions = makeGraphOptions();
+  MyGraph.init(graphOptions);
+}
+var makeGraphOptions = function () {
   var helpfulsPerStudent = [{x: 0, y: 0}];
   var commentsPerResponse = [{x: 0, y: 0}];
   var format = function(n) { return moment(n).format("MMM D") };
-  var graphOptions = {
+  return {
     graphOpts: {
       width: ($("#graph_container").width() - 45), // responsive resize
       height: 110,
@@ -42,17 +44,14 @@ var makeGraph = function () {
     },
     yOpts: {
       orientation: 'left',
-      grid: false,
       ticks: 3,
       tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
       element: document.getElementById('y_axis')
     },
     xOpts: {
       orientation: 'bottom',
-      grid: false,
       tickFormat: format,
       element: document.getElementById('x_axis'),
     }
   }
-  MyGraph.init(graphOptions);
 }

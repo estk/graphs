@@ -1,3 +1,7 @@
+Meteor.startup(function () {
+  $(window).on('resize', function () { MyGraph.resize(); });
+});
+
 MyGraph = {
   graph: null,
   element: null,
@@ -16,7 +20,7 @@ MyGraph = {
   },
   init: function (graphOptions) {
     var element = document.querySelector("#graph");
-    graphOptions.graphOpts.element = element
+    graphOptions.graphOpts.element = element;
     var graph = new Rickshaw.Graph(graphOptions.graphOpts);
     graph.renderer.unstack = true;
     graph.render();
@@ -41,17 +45,9 @@ MyGraph = {
 var prepStat = function(n, d, t) {
   return {y: n/d, x: t};
 };
-
-// returns a time series of Helpfuls per Student
 var prepHps = function(stat) {
   return prepStat(stat.helpfulCount, stat.studentCount, stat.date);
 };
-
-// returns a time series of Comments per Response
 var prepCpr = function(stat) {
   return prepStat(stat.commentCount, stat.responseCount, stat.date);
 };
-
-Meteor.startup(function () {
-  $(window).on('resize', function () { MyGraph.resize(); });
-});
