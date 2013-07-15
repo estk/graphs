@@ -1,3 +1,8 @@
 <template name="classesShow">
-  {{> graph}}
+  <div id="graph_area">
+    <div id="percent-flips">% of flips completed</div>
+    {{#with graphOptions}}
+      {{> graph}}
+    {{/with}}
+  </div>
 </template>
