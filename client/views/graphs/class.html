@@ -1,13 +1,7 @@
-<template name="graphsClass">
-  <div id="graph_area">
-    <div id="percent-flips">% of flips completed</div>
-    {{#constant}}
-      <div id ="graph_container">
-        <div id="y_axis"></div>
-        <div id="graph"></div>
-        <div id="x_axis"></div>
-      </div>
-      <div id="legend"></div>
-    {{/constant}}
-  </div>
+<template name="classesShow">
+  <div id="percent-flips"><span>100%</span> of flips completed</div>
+  <div id="graph-label">PERFORMANCE OVER TIME</div>
+  {{#with graphOptions}}
+    {{> graph}}
+  {{/with}}
 </template>
