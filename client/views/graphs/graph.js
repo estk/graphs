@@ -20,52 +20,74 @@ Template.graph.rendered = function () {
 // seriesComputation :: (Depends on Collection) -> [[{x: float, y: float}]]
 
 GraphWrapper = function (template, graphOptions) {
+  this.template = template;
   this.graph = null
-  this.yAxis = null
-  this.xAxis = null
-  this.legend = null
   this.seriesComputation = graphOptions.seriesComputation;
   
   var element = template.find("#graph");
   graphOptions.graphOpts.element = element;
   graphOptions.graphOpts.width = $(template.find("#graph_container")).width() - 45;
-  var graph = new Rickshaw.Graph(graphOptions.graphOpts);
+  graph = new Rickshaw.Graph(graphOptions.graphOpts);
   graph.renderer.unstack = true;
   graph.render();
   this.graph = graph;
   
   graphOptions.yOpts.graph = graph;
   graphOptions.yOpts.element= template.find("#y_axis")
-  this.yAxis = new Rickshaw.Graph.Axis.Y(graphOptions.yOpts);
-  this.yAxis.render();
+  var yAxis = new Rickshaw.Graph.Axis.Y(graphOptions.yOpts);
+  yAxis.render();
   
   graphOptions.xOpts.graph = graph;
   graphOptions.xOpts.element= template.find("#x_axis")
-  this.xAxis = new Rickshaw.Graph.Axis.X(graphOptions.xOpts);
-  this.xAxis.render();
+  var xAxis = new Rickshaw.Graph.Axis.X(graphOptions.xOpts);
+  xAxis.render();
 
-  this.legend = new Rickshaw.Graph.Legend( {
+  var legend = new Rickshaw.Graph.Legend( {
     graph: graph,
     element: template.find("#legend")
   });
+  
+  // Methods
+  self = this;
+  this.update = function () {
+    self._updateData(self.seriesComputation());
+  }
+  this.resize = function (width) {
+    if (self.graph) {
+      self.graph.configure({width: width});
+      self.graph.render();
+      self._makeDots();
+    }
+  }
   return this;
 }
 
 GraphWrapper.prototype = {
-  update: function () {
-    this._updateData(this.seriesComputation());
-  },
   _updateData: function (data) {
     if (this.graph) {
       for (var i=0;i<this.graph.series.length;i++)
         this.graph.series[i].data = data[i];
       this.graph.update();
     }
+    this._makeDots();
   },
-  resize: function (width) {
-    if (this.graph) {
-      this.graph.configure({width: width});
-      this.graph.render();
+  _makeDots: function () {
+    var dots = this.template.findAll(".dot");
+    if (dots && this.graph.element) {
+      var elem = this.template.find("#graph")
+      _.each(dots, function (e) { elem.removeChild(e); });
     }
+    var self = this;
+    _.each(this.graph.series, function (s) {
+      var lastPoint = s.data[s.data.length-1];
+      var left = self.graph.x(lastPoint.x);
+      var top = self.graph.y(lastPoint.y);
+      var element = document.createElement('div');
+      element.className = 'dot';
+      element.style.left = left + 'px';
+      element.style.top = top + 'px';
+      element.style.borderColor = s.stroke;
+      self.template.find("#graph").appendChild(element);
+    });
   }
 }
