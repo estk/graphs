@@ -50,7 +50,8 @@ GraphWrapper = function (template, graphOptions) {
   // Methods
   self = this;
   this.update = function () {
-    self._updateData(self.seriesComputation());
+    var series = self.seriesComputation()
+    if (series) self._updateData(series);
   }
   this.resize = function (width) {
     if (self.graph) {

@@ -11,7 +11,7 @@ var makeSeries = function () {
       .find({classId: cls._id}, {sort: {date: -1}, limit:10})
       .fetch();
     var sortedStats = _.sortBy(statAry, function(o){return o.date});
-  } else sortedStats = null;
+  } else return null;
   var series = []
   series[0] = _.map(sortedStats, prepHps);
   series[1] = _.map(sortedStats, prepCpr);
