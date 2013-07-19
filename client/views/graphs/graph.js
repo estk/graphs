@@ -11,7 +11,7 @@ Template.graph.rendered = function () {
     });
 
     $(window).on('resize', function () { 
-      graph.resize(($("#graph_container").width() - 45)); 
+      graph.resize(($(".graph-container").width() - 45)); 
     });
   }
 }
@@ -24,27 +24,27 @@ GraphWrapper = function (template, graphOptions) {
   this.graph = null
   this.seriesComputation = graphOptions.seriesComputation;
   
-  var element = template.find("#graph");
+  var element = template.find(".chart");
   graphOptions.graphOpts.element = element;
-  graphOptions.graphOpts.width = $(template.find("#graph_container")).width() - 45;
+  graphOptions.graphOpts.width = $(template.find(".graph-container")).width() - 45;
   graph = new Rickshaw.Graph(graphOptions.graphOpts);
   graph.renderer.unstack = true;
   graph.render();
   this.graph = graph;
   
   graphOptions.yOpts.graph = graph;
-  graphOptions.yOpts.element= template.find("#y_axis")
+  graphOptions.yOpts.element= template.find(".y-axis")
   var yAxis = new Rickshaw.Graph.Axis.Y(graphOptions.yOpts);
   yAxis.render();
   
   graphOptions.xOpts.graph = graph;
-  graphOptions.xOpts.element= template.find("#x_axis")
+  graphOptions.xOpts.element= template.find(".x-axis")
   var xAxis = new Rickshaw.Graph.Axis.X(graphOptions.xOpts);
   xAxis.render();
 
   var legend = new Rickshaw.Graph.Legend( {
     graph: graph,
-    element: template.find("#legend")
+    element: template.find(".legend")
   });
   
   // Methods
@@ -75,7 +75,7 @@ GraphWrapper.prototype = {
   _makeDots: function () {
     var dots = this.template.findAll(".dot");
     if (dots && this.graph.element) {
-      var elem = this.template.find("#graph")
+      var elem = this.template.find(".chart")
       _.each(dots, function (e) { elem.removeChild(e); });
     }
     var self = this;
@@ -88,7 +88,7 @@ GraphWrapper.prototype = {
       element.style.left = left + 'px';
       element.style.top = top + 'px';
       element.style.borderColor = s.stroke;
-      self.template.find("#graph").appendChild(element);
+      self.template.find(".chart").appendChild(element);
     });
   }
 }
