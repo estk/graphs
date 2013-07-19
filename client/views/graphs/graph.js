@@ -33,12 +33,12 @@ GraphWrapper = function (template, graphOptions) {
   this.graph = graph;
   
   graphOptions.yOpts.graph = graph;
-  graphOptions.yOpts.element= template.find(".y-axis")
+  graphOptions.yOpts.element = template.find(".y-axis")
   var yAxis = new Rickshaw.Graph.Axis.Y(graphOptions.yOpts);
   yAxis.render();
   
   graphOptions.xOpts.graph = graph;
-  graphOptions.xOpts.element= template.find(".x-axis")
+  graphOptions.xOpts.element = template.find(".x-axis")
   var xAxis = new Rickshaw.Graph.Axis.X(graphOptions.xOpts);
   xAxis.render();
 
