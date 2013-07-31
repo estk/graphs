@@ -11,21 +11,24 @@ var cid = Classes.insert({
   _teacherName: 'Tom Halbert',
 });
 // Prepare and insert sample statistics for the class
-var hc = 1, cc = 1, rc = 1, sc = 1;
-var date = moment().subtract("days", 19);
-_.times(20, function (n) {
-  hc += Math.round(Math.random() * 5 );
-  cc += Math.round(Math.random() * 5 );
-  rc += Math.round(Math.random() * 5 );
-  sc += Math.round(Math.random() * 5 );
+var prepareStatistics = function (cid) {
+  var helpfulsCount = 1, commentCount = 1, responseCount = 1, studentCount = 1;
+  var date = moment().subtract("days", 19);
+  _.times(20, function (n) {
+    helpfulsCount += Math.round(Math.random() * 5);
+    commentCount  += Math.round(Math.random() * 5);
+    responseCount += Math.round(Math.random() * 5);
+    studentCount  += Math.round(Math.random() * 5);
   
-  ClassStatistics.insert({
-    classId: cid,
-    date: date.toDate().getTime(),
-    helpfulCount: hc,
-    commentCount: cc,
-    responseCount: rc,
-    studentCount: sc
+    ClassStatistics.insert({
+      classId: cid,
+      date: date.toDate().getTime(),
+      helpfulsCount: helpfulsCount,
+      commentCount: commentCount,
+      responseCount: responseCount,
+      studentCount: studentCount
+    });
+    date = date.add("days", 1);
   });
-  date = date.add("days", 1);
-});
+}
+prepareStatistics(cid);
